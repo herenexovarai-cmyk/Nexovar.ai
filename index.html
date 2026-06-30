@@ -19,9 +19,8 @@
     --amber: #ffb454;
   }
   *{ margin:0; padding:0; box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
+  html{ scroll-behavior:smooth; background:var(--bg); }
   body{
-    background: var(--bg);
     color: var(--ink);
     font-family: 'Inter', sans-serif;
     overflow-x:hidden;
@@ -56,7 +55,7 @@
     position:relative; min-height:100svh; display:flex; flex-direction:column;
     justify-content:center; padding-top:90px;
   }
-  #scene{ position:absolute; inset:0; z-index:0; opacity:0; transition:opacity 1.4s ease; }
+  #scene{ position:fixed; inset:0; z-index:-1; opacity:0; transition:opacity 1.4s ease; pointer-events:none; }
   #scene.ready{ opacity:1; }
   .hero-grid{
     position:absolute; inset:0; z-index:0;
@@ -296,7 +295,7 @@
       <div class="foot-cols">
         <div class="foot-col"><h4>STUDIO</h4><a href="#capabilities">Capabilities</a><a href="#process">Process</a><a href="careers.html">Careers</a></div>
         <div class="foot-col"><h4>COMPANY</h4><a href="about.html">About</a><a href="contributor.html">Contribute</a><a href="contact.html">Contact</a></div>
-        <div class="foot-col"><h4>CONNECT</h4><a href="mailto:email-here.nexovar.ai@gmail.com">Email</a><a href="tel:+917985518104">+91 79855 18104</a><a href="#">LinkedIn</a></div>
+        <div class="foot-col"><h4>CONNECT</h4><a href="mailto:here.nexovar.ai@gmail.com">Email</a><a href="tel:+917985518104">+91 79855 18104</a><a href="#">LinkedIn</a></div>
       </div>
     </div>
     <div class="foot-bottom">
@@ -315,7 +314,7 @@
   }, { threshold:0.15 });
   revealEls.forEach(el=>io.observe(el));
 
-  // 3D hero scene: premium lit "data core" — faceted glass core, orbit ring, accent particles
+  // 3D hero scene: realistic metallic condenser microphone + orbiting data-network field
   (function(){
     const container = document.getElementById('scene');
     if(!window.THREE){ return; }
@@ -323,92 +322,237 @@
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x0a0b0e, 0.05);
+    scene.fog = new THREE.FogExp2(0x0a0b0e, 0.045);
 
-    const camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0.2, 9.5);
+    const camera = new THREE.PerspectiveCamera(38, window.innerWidth/window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0.1, 10);
 
     const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
 
-    // lighting — gives the core real dimensionality instead of flat wireframe
-    scene.add(new THREE.AmbientLight(0x4a4a6a, 0.6));
-    const keyLight = new THREE.PointLight(0x9b7dff, 12, 20, 2);
-    keyLight.position.set(4, 3, 5);
+    // studio-style lighting — multiple sources to fake reflections on metal (no env map needed)
+    scene.add(new THREE.AmbientLight(0x4a4a6a, 0.5));
+    const keyLight = new THREE.PointLight(0x9b7dff, 16, 24, 2);
+    keyLight.position.set(4, 4, 5);
     scene.add(keyLight);
-    const rimLight = new THREE.PointLight(0x46e0c8, 9, 20, 2);
+    const rimLight = new THREE.PointLight(0x46e0c8, 13, 24, 2);
     rimLight.position.set(-4, -2, -3);
     scene.add(rimLight);
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.25);
-    fillLight.position.set(0, 5, 3);
+    const topSpec = new THREE.PointLight(0xffffff, 8, 14, 2);
+    topSpec.position.set(0.5, 5, 3);
+    scene.add(topSpec);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+    fillLight.position.set(-2, 2, 4);
     scene.add(fillLight);
 
     const group = new THREE.Group();
     scene.add(group);
 
-    // faceted core — solid, shaded, low-poly "gem" look (reliable across GPUs, no env map needed)
-    const coreGeo = new THREE.IcosahedronGeometry(1.85, 1);
-    const coreMat = new THREE.MeshStandardMaterial({
-      color: 0x171a26, metalness: 0.55, roughness: 0.28,
-      emissive: 0x2a1f5c, emissiveIntensity: 0.35,
-      flatShading: true
+    // procedural grille texture — perforated metal mesh pattern, generated at runtime (no external assets)
+    function makeGrilleTexture(){
+      const size = 256;
+      const c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#9a9ca6';
+      ctx.fillRect(0,0,size,size);
+      ctx.fillStyle = '#1c1d24';
+      const step = 11;
+      for(let y=0;y<size;y+=step){
+        const rowOffset = (Math.round(y/step)%2)*step/2;
+        for(let x=0;x<size;x+=step){
+          ctx.beginPath();
+          ctx.arc(x+rowOffset, y, 2.4, 0, Math.PI*2);
+          ctx.fill();
+        }
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      return tex;
+    }
+    const grilleTex = makeGrilleTexture();
+    grilleTex.repeat.set(8, 3);
+
+    const mic = new THREE.Group();
+
+    // lower body / handle — smooth brushed metal
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0xaeb0ba, metalness: 0.9, roughness: 0.32 });
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.52, 1.5, 40), bodyMat);
+    body.position.y = -0.95;
+    mic.add(body);
+
+    // accent ring — brand color, sits at the body/basket joint
+    const accentRing = new THREE.Mesh(
+      new THREE.TorusGeometry(0.515, 0.025, 16, 48),
+      new THREE.MeshStandardMaterial({ color: 0x46e0c8, metalness: 0.5, roughness: 0.3, emissive: 0x1c8f7e, emissiveIntensity: 0.6 })
+    );
+    accentRing.rotation.x = Math.PI/2;
+    accentRing.position.y = -0.18;
+    mic.add(accentRing);
+
+    // upper basket — perforated grille texture via bump map for a real mesh look
+    const grilleMat = new THREE.MeshStandardMaterial({
+      color: 0xc4c6cf, metalness: 0.85, roughness: 0.4,
+      bumpMap: grilleTex, bumpScale: 0.035
     });
-    const core = new THREE.Mesh(coreGeo, coreMat);
-    group.add(core);
+    const basket = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1.3, 40, 1, true), grilleMat);
+    basket.position.y = 0.62;
+    mic.add(basket);
 
-    // crisp edge overlay traced over the facets for a precision, engineered feel
-    const edges = new THREE.EdgesGeometry(coreGeo);
-    const edgeMat = new THREE.LineBasicMaterial({ color: 0x8be8d8, transparent:true, opacity:0.45 });
-    const edgeLines = new THREE.LineSegments(edges, edgeMat);
-    edgeLines.scale.setScalar(1.002);
-    group.add(edgeLines);
+    // domed cap on top of the basket
+    const cap = new THREE.Mesh(
+      new THREE.SphereGeometry(0.5, 32, 20, 0, Math.PI*2, 0, Math.PI/2),
+      grilleMat
+    );
+    cap.position.y = 1.27;
+    mic.add(cap);
 
-    // inner glow sphere — soft core light bleeding through the facets
-    const glowGeo = new THREE.IcosahedronGeometry(1.15, 1);
-    const glowMat = new THREE.MeshBasicMaterial({ color: 0x7c5cff, transparent:true, opacity:0.5 });
-    const glow = new THREE.Mesh(glowGeo, glowMat);
-    group.add(glow);
+    // base cap — XLR-connector hint
+    const baseCap = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.52, 0.46, 0.18, 40),
+      new THREE.MeshStandardMaterial({ color: 0x2a2b32, metalness: 0.75, roughness: 0.45 })
+    );
+    baseCap.position.y = -1.78;
+    mic.add(baseCap);
 
-    // single orbiting accent ring — restrained, premium signature element
-    const ringGeo = new THREE.TorusGeometry(3.1, 0.012, 16, 128);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0x46e0c8, transparent:true, opacity:0.55 });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
+    // subtle violet under-glow inside the basket — reads as the capsule's "active" indicator
+    const innerGlow = new THREE.PointLight(0x7c5cff, 3, 2.2, 2);
+    innerGlow.position.y = 0.7;
+    mic.add(innerGlow);
+
+    mic.rotation.z = -0.18;
+    mic.rotation.x = 0.05;
+    mic.position.y = -0.1;
+    group.add(mic);
+
+    // soft gradient halo glowing behind the mic — violet-to-cyan radial blend
+    function makeHaloTexture(){
+      const size = 512;
+      const c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      const ctx = c.getContext('2d');
+      const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+      grad.addColorStop(0, 'rgba(124,92,255,0.55)');
+      grad.addColorStop(0.45, 'rgba(70,224,200,0.25)');
+      grad.addColorStop(1, 'rgba(70,224,200,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,size,size);
+      return new THREE.CanvasTexture(c);
+    }
+    const haloTex = makeHaloTexture();
+    const haloSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: haloTex, transparent:true, opacity:0.55, depthWrite:false, blending: THREE.AdditiveBlending
+    }));
+    haloSprite.scale.set(7.5, 7.5, 1);
+    haloSprite.position.z = -1.2;
+    group.add(haloSprite);
+
+    // twinkling sparkle field behind the mic — small glowing sprites with randomized twinkle phase
+    function makeSparkleTexture(){
+      const size = 64;
+      const c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      const ctx = c.getContext('2d');
+      const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+      grad.addColorStop(0, 'rgba(255,255,255,1)');
+      grad.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,size,size);
+      return new THREE.CanvasTexture(c);
+    }
+    const sparkleTex = makeSparkleTexture();
+    const sparkleColors = [0xe8e6ff, 0x9b7dff, 0x46e0c8];
+    const sparkleGroup = new THREE.Group();
+    const sparklePhases = [];
+    const sparkleCount = 36;
+    for(let i=0;i<sparkleCount;i++){
+      const color = sparkleColors[i % sparkleColors.length];
+      const mat = new THREE.SpriteMaterial({
+        map: sparkleTex, color, transparent:true, depthWrite:false, blending: THREE.AdditiveBlending
+      });
+      const spr = new THREE.Sprite(mat);
+      const radius = 1.3 + Math.random()*2.6;
+      const theta = Math.random()*Math.PI*2;
+      const yspread = (Math.random()-0.5)*3.6;
+      spr.position.set(Math.cos(theta)*radius, yspread, Math.sin(theta)*radius - 0.8);
+      const baseScale = 0.06 + Math.random()*0.12;
+      spr.scale.setScalar(baseScale);
+      sparkleGroup.add(spr);
+      sparklePhases.push({
+        speed: 0.8 + Math.random()*1.8,
+        offset: Math.random()*Math.PI*2,
+        baseOpacity: 0.5 + Math.random()*0.5,
+        baseScale
+      });
+    }
+    group.add(sparkleGroup);
+
+    // accent rings orbiting the mic — ties back to the data/network brand motif
+    const ringGeo = new THREE.TorusGeometry(3.2, 0.01, 16, 128);
+    const ringMatO = new THREE.MeshBasicMaterial({ color: 0x46e0c8, transparent:true, opacity:0.4 });
+    const ring = new THREE.Mesh(ringGeo, ringMatO);
     ring.rotation.x = Math.PI/2.4;
     group.add(ring);
 
-    const ring2Geo = new THREE.TorusGeometry(3.55, 0.008, 16, 128);
-    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x7c5cff, transparent:true, opacity:0.3 });
+    const ring2Geo = new THREE.TorusGeometry(3.65, 0.007, 16, 128);
+    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x7c5cff, transparent:true, opacity:0.25 });
     const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
     ring2.rotation.x = Math.PI/1.7;
     ring2.rotation.y = Math.PI/5;
     group.add(ring2);
 
-    // fine particle field tracing the rings — depth + scale without visual noise
-    const nodeCount = 90;
-    const positions = new Float32Array(nodeCount*3);
+    // orbiting data-network field — nodes connected to nearest neighbors
+    const nodeCount = 60;
+    const nodePos = [];
     for(let i=0;i<nodeCount;i++){
-      const onRing = Math.random() > 0.4;
-      const radius = onRing ? (3.1 + (Math.random()-0.5)*0.15) : (4.2 + Math.random()*1.4);
+      const radius = 3.1 + Math.random()*2.0;
       const theta = Math.random()*Math.PI*2;
-      const phi = onRing ? (Math.PI/2 + (Math.random()-0.5)*0.5) : Math.acos((Math.random()*2)-1);
-      positions[i*3]   = radius*Math.sin(phi)*Math.cos(theta);
-      positions[i*3+1] = radius*Math.sin(phi)*Math.sin(theta)*0.6;
-      positions[i*3+2] = radius*Math.cos(phi);
+      const phi = Math.acos((Math.random()*2)-1);
+      nodePos.push(new THREE.Vector3(
+        radius*Math.sin(phi)*Math.cos(theta),
+        radius*Math.sin(phi)*Math.sin(theta)*0.65,
+        radius*Math.cos(phi)
+      ));
     }
+    const ptPositions = new Float32Array(nodeCount*3);
+    nodePos.forEach((v,i)=>{ ptPositions[i*3]=v.x; ptPositions[i*3+1]=v.y; ptPositions[i*3+2]=v.z; });
     const pointsGeo = new THREE.BufferGeometry();
-    pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
-    const pointsMat = new THREE.PointsMaterial({ color: 0xe8e6ff, size:0.035, transparent:true, opacity:0.6, sizeAttenuation:true });
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(ptPositions,3));
+    const pointsMat = new THREE.PointsMaterial({ color: 0xe8e6ff, size:0.045, transparent:true, opacity:0.75, sizeAttenuation:true });
     const points = new THREE.Points(pointsGeo, pointsMat);
     group.add(points);
 
+    const linePos = [];
+    for(let i=0;i<nodeCount;i++){
+      const dists = [];
+      for(let j=0;j<nodeCount;j++){
+        if(i===j) continue;
+        dists.push([nodePos[i].distanceTo(nodePos[j]), j]);
+      }
+      dists.sort((a,b)=>a[0]-b[0]);
+      for(let k=0;k<2;k++){
+        const j = dists[k][1];
+        linePos.push(nodePos[i].x, nodePos[i].y, nodePos[i].z, nodePos[j].x, nodePos[j].y, nodePos[j].z);
+      }
+    }
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePos), 3));
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x46e0c8, transparent:true, opacity:0.15 });
+    const netLines = new THREE.LineSegments(lineGeo, lineMat);
+    group.add(netLines);
+
     let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
     let pMouseX = 0, pMouseY = 0;
+    let pulse = 0;
     window.addEventListener('mousemove', (e)=>{
       targetX = (e.clientX / window.innerWidth - 0.5);
       targetY = (e.clientY / window.innerHeight - 0.5);
     });
+    window.addEventListener('mousedown', ()=>{ pulse = 1; });
 
     function onResize(){
       camera.aspect = window.innerWidth/window.innerHeight;
@@ -417,37 +561,68 @@
     }
     window.addEventListener('resize', onResize);
 
-    let scrollY = 0;
-    window.addEventListener('scroll', ()=>{ scrollY = window.scrollY; });
+    let scrollY = 0, scrollProgress = 0;
+    function updateScrollProgress(){
+      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+      scrollY = window.scrollY;
+      scrollProgress = scrollMax > 0 ? Math.min(1, Math.max(0, scrollY / scrollMax)) : 0;
+    }
+    window.addEventListener('scroll', updateScrollProgress);
+    window.addEventListener('resize', updateScrollProgress);
+    updateScrollProgress();
 
     const clock = new THREE.Clock();
+
     function animate(){
       requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
+      pulse *= 0.94;
+
       if(!prefersReduced){
-        core.rotation.y = t*0.1;
-        core.rotation.x = Math.sin(t*0.15)*0.08;
-        edgeLines.rotation.copy(core.rotation);
-        glow.rotation.y = -t*0.07;
-        ring.rotation.z = t*0.06;
-        ring2.rotation.z = -t*0.04;
+        // slow turntable rotation — like a studio product showcase
+        mic.rotation.y = t*0.18;
+        mic.position.y = -0.1 + Math.sin(t*0.5)*0.07;
+        innerGlow.intensity = 3 + pulse*4 + Math.sin(t*1.6)*0.6;
+        accentRing.material.emissiveIntensity = 0.6 + pulse*0.8;
+
+        ring.rotation.z = t*0.07;
+        ring2.rotation.z = -t*0.045;
+        netLines.rotation.y = t*0.035;
         keyLight.position.x = Math.sin(t*0.3)*5;
         keyLight.position.z = Math.cos(t*0.3)*5 + 2;
       }
-      mouseX += (targetX - mouseX)*0.04;
-      mouseY += (targetY - mouseY)*0.04;
-      // particle fleet tracks the cursor directly — faster response, its own gentle drift-rotation
-      pMouseX += (targetX - pMouseX)*0.07;
-      pMouseY += (targetY - pMouseY)*0.07;
+
+      mouseX += (targetX - mouseX)*0.06;
+      mouseY += (targetY - mouseY)*0.06;
+      pMouseX += (targetX - pMouseX)*0.09;
+      pMouseY += (targetY - pMouseY)*0.09;
+
       points.rotation.y = t*0.05 + pMouseX*1.4;
       points.rotation.x = -pMouseY*1.0;
       points.position.x = pMouseX*0.7;
       points.position.y = -pMouseY*0.5;
-      group.rotation.y += (mouseX*0.5 - (group.rotation.y - core.rotation.y))*0.03;
-      group.position.y = -scrollY*0.0014 + Math.sin(clock.getElapsedTime()*0.4)*0.03;
-      group.position.x = mouseX*0.3;
-      const fade = Math.max(0, 1 - scrollY/700);
-      group.visible = fade > 0.02;
+      netLines.rotation.x = points.rotation.x;
+      netLines.position.copy(points.position);
+
+      // mic tilts toward the cursor like it's pointed at you — restrained, premium motion
+      mic.rotation.x = 0.05 - mouseY*0.25;
+      mic.rotation.z = -0.18 + mouseX*0.18;
+
+      group.rotation.y = mouseX*0.25;
+      // mic drifts downward with the page as the user scrolls — visible all the way to the bottom
+      group.position.y = 0.4 - scrollProgress*5.6 + Math.sin(t*0.4)*0.05;
+      group.position.x = mouseX*0.3 + Math.sin(scrollProgress*Math.PI)*0.4;
+      group.scale.setScalar((1 - scrollProgress*0.18) + pulse*0.04);
+
+      sparkleGroup.children.forEach((s, i)=>{
+        const phase = sparklePhases[i];
+        const tw = (Math.sin(t*phase.speed + phase.offset) + 1) / 2;
+        s.material.opacity = phase.baseOpacity * (0.35 + tw*0.65);
+        s.scale.setScalar(phase.baseScale * (0.8 + tw*0.5));
+      });
+      haloSprite.material.opacity = 0.5 + Math.sin(t*0.6)*0.08;
+      haloSprite.position.set(mic.position.x, mic.position.y, mic.position.z - 1.2);
+
       renderer.render(scene, camera);
     }
     animate();
