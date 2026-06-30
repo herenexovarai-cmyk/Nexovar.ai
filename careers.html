@@ -4,36 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Careers — Nexovar.ai</title>
-<meta name="description" content="There are no open roles at Nexovar.ai right now — but we're always meeting strong people. Tell us about yourself.">
+<meta name="description" content="Nexovar.ai is continuously working on AI projects across audio, voice, speech, annotation, RLHF and linguistic services. Join our global talent network.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0a0b0e;
-    --bg-soft: #101218;
-    --line: rgba(245,244,240,0.10);
-    --ink: #f5f4f0;
-    --ink-dim: #9396a1;
-    --violet: #7c5cff;
-    --cyan: #46e0c8;
+    --bg:#0a0b0e; --bg-soft:#101218; --line:rgba(245,244,240,0.10);
+    --ink:#f5f4f0; --ink-dim:#9396a1; --violet:#7c5cff; --cyan:#46e0c8;
   }
   *{ margin:0; padding:0; box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{ background:var(--bg); color:var(--ink); font-family:'Inter', sans-serif; }
-  h1,h2,h3,.display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.02em; }
-  .mono{ font-family:'JetBrains Mono', monospace; }
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.02em; }
   a{ color:inherit; text-decoration:none; }
-  .wrap{ max-width:880px; margin:0 auto; padding:0 32px; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
 
   nav{
     position:fixed; top:0; left:0; right:0; z-index:100;
     display:flex; align-items:center; justify-content:space-between;
-    padding:22px 40px;
-    backdrop-filter: blur(10px);
-    background: linear-gradient(to bottom, rgba(10,11,14,0.85), transparent);
+    padding:22px 40px; backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom, rgba(10,11,14,0.85), transparent);
   }
-  .logo{ display:flex; align-items:center; gap:10px; font-weight:600; font-size:18px; }
-  .logo-mark{ display:block; flex-shrink:0; } .logo{ display:flex; align-items:center; gap:8px; } .accent{ background:linear-gradient(90deg, var(--violet), var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .logo{ display:flex; align-items:center; gap:8px; font-weight:600; font-size:18px; }
+  .logo-mark{ display:block; flex-shrink:0; }
+  .accent{ background:linear-gradient(90deg, var(--violet), var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .navlinks{ display:flex; gap:36px; font-size:14px; color:var(--ink-dim); }
   .navlinks a:hover{ color:var(--ink); }
   .navcta{ border:1px solid var(--line); padding:9px 18px; border-radius:100px; font-size:13px; transition:all .25s ease; }
@@ -45,49 +39,68 @@
     background-image:
       linear-gradient(var(--line) 1px, transparent 1px),
       linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black, transparent);
+    background-size:64px 64px;
+    mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, black, transparent);
   }
 
-  .page-head{ padding:180px 0 64px; text-align:center; }
   .eyebrow{
     display:inline-flex; align-items:center; gap:8px;
     font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.08em;
     color:var(--cyan); border:1px solid rgba(70,224,200,0.3); background:rgba(70,224,200,0.06);
     padding:6px 14px; border-radius:100px; margin-bottom:24px;
   }
-  .page-head h1{ font-size:clamp(34px,5.5vw,56px); font-weight:600; line-height:1.05; }
-  .page-head p{ color:var(--ink-dim); font-size:17px; max-width:520px; margin:20px auto 0; line-height:1.65; }
 
-  form{ padding:0 0 140px; }
-  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
-  .field{ display:flex; flex-direction:column; gap:8px; }
-  .field.full{ grid-column:1/-1; }
-  label{ font-size:13px; color:var(--ink-dim); font-family:'JetBrains Mono', monospace; }
-  input, select, textarea{
-    background:var(--bg-soft); border:1px solid var(--line); border-radius:8px;
-    padding:13px 16px; color:var(--ink); font-family:'Inter',sans-serif; font-size:14.5px;
-    outline:none; transition:border-color .2s ease;
-  }
-  input:focus, select:focus, textarea:focus{ border-color:var(--cyan); }
-  textarea{ resize:vertical; min-height:120px; }
-  select{ appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239396a1' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; }
-  .field input[type=file]{ padding:10px 14px; font-size:13px; color:var(--ink-dim); }
+  .page-head{ padding:180px 0 64px; text-align:center; }
+  .page-head h1{ font-size:clamp(34px,5.5vw,58px); font-weight:600; line-height:1.08; max-width:760px; margin:0 auto; }
+  .page-head p{ color:var(--ink-dim); font-size:17.5px; max-width:640px; margin:24px auto 0; line-height:1.7; }
 
-  .submit-row{ display:flex; align-items:center; gap:18px; margin-top:8px; flex-wrap:wrap; }
-  button[type=submit]{
-    background:var(--ink); color:var(--bg); border:none; padding:15px 32px; border-radius:100px;
-    font-size:14px; font-weight:600; cursor:pointer; transition:all .25s ease; font-family:'Inter',sans-serif;
+  .hero-cta{ display:flex; gap:14px; justify-content:center; margin-top:40px; flex-wrap:wrap; }
+  .btn{ padding:15px 32px; border-radius:100px; font-size:14.5px; font-weight:600; transition:all .25s ease; display:inline-flex; align-items:center; gap:8px; }
+  .btn-primary{ background:linear-gradient(90deg, var(--violet), var(--cyan)); color:#070810; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 8px 30px rgba(124,92,255,0.3); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+
+  section{ padding:90px 0; }
+  .section-tag{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--violet); letter-spacing:0.08em; margin-bottom:18px; display:block; }
+
+  .domains-head{ max-width:620px; margin-bottom:52px; }
+  .domains-head h2{ font-size:clamp(26px,3.8vw,40px); font-weight:600; line-height:1.15; }
+  .domains-head p{ color:var(--ink-dim); margin-top:16px; font-size:16px; line-height:1.65; }
+  .domain-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .domain-card{ background:var(--bg); padding:30px 26px; transition:background .3s ease; }
+  .domain-card:hover{ background:var(--bg-soft); }
+  .domain-card .dnum{ font-family:'JetBrains Mono', monospace; color:var(--ink-dim); font-size:11px; }
+  .domain-card h3{ font-size:16.5px; margin:14px 0 8px; font-weight:600; }
+  .domain-card p{ color:var(--ink-dim); font-size:13px; line-height:1.55; }
+  @media (max-width:960px){ .domain-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .domain-grid{ grid-template-columns:1fr; } }
+
+  .who{ border-top:1px solid var(--line); }
+  .who-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+  .who-grid h2{ font-size:clamp(26px,3.8vw,40px); font-weight:600; line-height:1.15; }
+  .who-list{ display:flex; flex-direction:column; gap:22px; }
+  .who-item{ display:flex; gap:16px; align-items:flex-start; }
+  .who-item .ic{
+    width:38px; height:38px; border-radius:10px; flex-shrink:0;
+    background:rgba(70,224,200,0.08); border:1px solid rgba(70,224,200,0.25);
+    display:flex; align-items:center; justify-content:center;
   }
-  button[type=submit]:hover{ background:var(--cyan); transform:translateY(-2px); }
-  .submit-note{ font-size:13px; color:var(--ink-dim); }
+  .who-item p{ color:var(--ink-dim); font-size:15px; line-height:1.6; padding-top:6px; }
+  .who-item strong{ color:var(--ink); font-weight:600; }
+  @media (max-width:860px){ .who-grid{ grid-template-columns:1fr; gap:32px; } }
+
+  .final-cta{
+    border-top:1px solid var(--line); text-align:center;
+    background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(124,92,255,0.08), transparent);
+  }
+  .final-cta h2{ font-size:clamp(28px,4.5vw,48px); font-weight:600; max-width:680px; margin:0 auto; line-height:1.15; }
+  .final-cta p{ color:var(--ink-dim); margin:18px auto 36px; max-width:480px; font-size:16px; line-height:1.6; }
 
   footer{ border-top:1px solid var(--line); padding:40px 0; text-align:center; }
   footer p{ color:var(--ink-dim); font-size:13px; }
   footer a{ color:var(--ink-dim); }
   footer a:hover{ color:var(--cyan); }
-
-  @media (max-width:640px){ .field-row{ grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -95,18 +108,21 @@
 <div class="hero-grid"></div>
 
 <nav>
-  <a href="index.html" class="logo"><svg class="logo-mark" width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="lgA" x1="0" y1="0" x2="40" y2="40"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#46e0c8"/></linearGradient></defs>
-        <line x1="10" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
-        <line x1="30" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
-        <line x1="10" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
-        <line x1="30" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
-        <circle cx="20" cy="20" r="5" fill="#8b6bff"/>
-        <circle cx="10" cy="10" r="3.5" fill="#7c5cff"/>
-        <circle cx="30" cy="10" r="3.5" fill="#46e0c8"/>
-        <circle cx="10" cy="30" r="3.5" fill="#46e0c8"/>
-        <circle cx="30" cy="30" r="3.5" fill="#7c5cff"/>
-      </svg>Nexovar<span class="accent">.ai</span></a>
+  <a href="index.html" class="logo">
+    <svg class="logo-mark" width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="lgA" x1="0" y1="0" x2="40" y2="40"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#46e0c8"/></linearGradient></defs>
+      <line x1="10" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+      <line x1="30" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+      <line x1="10" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+      <line x1="30" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+      <circle cx="20" cy="20" r="5" fill="#8b6bff"/>
+      <circle cx="10" cy="10" r="3.5" fill="#7c5cff"/>
+      <circle cx="30" cy="10" r="3.5" fill="#46e0c8"/>
+      <circle cx="10" cy="30" r="3.5" fill="#46e0c8"/>
+      <circle cx="30" cy="30" r="3.5" fill="#7c5cff"/>
+    </svg>
+    Nexovar<span class="accent">.ai</span>
+  </a>
   <div class="navlinks">
     <a href="index.html#capabilities">Capabilities</a>
     <a href="index.html#process">Process</a>
@@ -120,79 +136,65 @@
 
 <div class="page-head wrap">
   <span class="eyebrow">● Careers at Nexovar.ai</span>
-  <h1>Join the network<br>powering our data pipelines.</h1>
-  <p>We collect and label data across audio, video, text, image and more for AI agent training. Tell us your expertise in your own words and we'll route you to the right work.</p>
+  <h1>We're always working on the next AI data project.</h1>
+  <p>Nexovar.ai is continuously running projects across audio collection, voice recording, speech collection, data annotation, AI evaluation, RLHF, linguistic services, multilingual tasks, and more — for AI teams building the future of artificial intelligence.</p>
+  <div class="hero-cta">
+    <a href="contributor.html" class="btn btn-primary">Become a Contributor →</a>
+    <a href="contact.html" class="btn btn-ghost">Talk to our team</a>
+  </div>
 </div>
 
-<form action="https://formsubmit.co/email-here.nexovar.ai@gmail.com" method="POST" class="wrap" id="careersForm">
-  <!-- FormSubmit configuration -->
-  <input type="hidden" name="_subject" value="New candidate submission — Nexovar.ai Careers">
-  <input type="hidden" name="_template" value="table">
-  <input type="hidden" name="_captcha" value="false">
-  <!-- Honeypot field for spam protection -->
-  <input type="text" name="_honey" style="display:none">
+<section class="wrap">
+  <div class="domains-head">
+    <span class="section-tag">// WHAT WE'RE WORKING ON</span>
+    <h2>A wide, constantly growing range of AI data work.</h2>
+    <p>Whether you're fluent in English or another language, have technical expertise, or simply want to contribute to the future of AI — there's a place for you in our network.</p>
+  </div>
+  <div class="domain-grid">
+    <div class="domain-card"><span class="dnum">01</span><h3>Audio &amp; Voice</h3><p>Audio collection, voice recording, speech collection and transcription across languages and accents.</p></div>
+    <div class="domain-card"><span class="dnum">02</span><h3>Data Annotation</h3><p>Labeling and tagging across text, image, audio and video to train accurate models.</p></div>
+    <div class="domain-card"><span class="dnum">03</span><h3>AI Evaluation &amp; RLHF</h3><p>Human feedback and quality evaluation that shapes how AI agents reason and respond.</p></div>
+    <div class="domain-card"><span class="dnum">04</span><h3>Linguistic Services</h3><p>Translation, localization and multilingual tasks across a growing list of languages.</p></div>
+  </div>
+</section>
 
-  <div class="field-row">
-    <div class="field">
-      <label for="name">FULL NAME</label>
-      <input type="text" id="name" name="Full Name" required>
+<section class="who">
+  <div class="wrap who-grid">
+    <div>
+      <span class="section-tag">// WHO WE'RE LOOKING FOR</span>
+      <h2>No fixed roles. A standing network.</h2>
     </div>
-    <div class="field">
-      <label for="email">EMAIL</label>
-      <input type="email" id="email" name="Email" required>
+    <div class="who-list">
+      <div class="who-item">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L9.5 17L19 7" stroke="#46e0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p><strong>Native and fluent speakers</strong> of English or any other language, for recording, transcription and linguistic projects.</p>
+      </div>
+      <div class="who-item">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L9.5 17L19 7" stroke="#46e0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p><strong>Technical and domain experts</strong> who can evaluate, annotate or review AI outputs with precision and judgment.</p>
+      </div>
+      <div class="who-item">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L9.5 17L19 7" stroke="#46e0c8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p><strong>Anyone who wants to contribute</strong> to AI's future — no specific background required to join the network.</p>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="field-row">
-    <div class="field">
-      <label for="phone">PHONE</label>
-      <input type="tel" id="phone" name="Phone">
-    </div>
-    <div class="field">
-      <label for="role">AREA OF EXPERTISE</label>
-      <input type="text" id="role" name="Area of Expertise" placeholder="e.g. Audio transcription, image annotation, NLP labeling..." required>
-    </div>
-    <div class="field">
-      <label for="datatype">DATA TYPE(S) YOU WORK WITH</label>
-      <input type="text" id="datatype" name="Data Types" placeholder="e.g. Audio, video, text, image">
-    </div>
-  </div>
-
-  <div class="field-row">
-    <div class="field">
-      <label for="experience">YEARS OF EXPERIENCE</label>
-      <select id="experience" name="Years of Experience">
-        <option value="">Select one</option>
-        <option>0–1 years</option>
-        <option>1–3 years</option>
-        <option>3–6 years</option>
-        <option>6+ years</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="linkedin">LINKEDIN / PORTFOLIO URL</label>
-      <input type="url" id="linkedin" name="LinkedIn / Portfolio">
-    </div>
-  </div>
-
-  <div class="field full">
-    <label for="resume">RESUME / CV (PDF preferred)</label>
-    <input type="file" id="resume" name="Resume" accept=".pdf,.doc,.docx">
-  </div>
-
-  <div class="field full" style="margin-top:20px;">
-    <label for="message">TELL US MORE</label>
-    <textarea id="message" name="Message" placeholder="Describe your experience, tools you use, languages, or any specific data types you specialize in."></textarea>
-  </div>
-
-  <div class="submit-row">
-    <button type="submit">Submit details →</button>
-    <span class="submit-note">We review every submission and route it to the right team.</span>
-  </div>
-</form>
+<section class="final-cta wrap">
+  <h2>Join our talent network today.</h2>
+  <p>Register once, and we'll match you to projects as they open — across whatever expertise you bring.</p>
+  <a href="contributor.html" class="btn btn-primary">Join Our Talent Network →</a>
+</section>
 
 <footer>
-  <p>© 2026 Nexovar.ai · <a href="mailto:email-here.nexovar.ai@gmail.com">email-here.nexovar.ai@gmail.com</a> · <a href="tel:+917985518104">+91 79855 18104</a> · <a href="contact.html">Contact</a></p>
+  <p>© 2026 Nexovar.ai · <a href="mailto:here.nexovar.ai@gmail.com">here.nexovar.ai@gmail.com</a> · <a href="tel:+917985518104">+91 79855 18104</a> · <a href="contact.html">Contact</a></p>
 </footer>
 
 </body>
