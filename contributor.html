@@ -138,11 +138,12 @@
   <span class="modal-chip">📍 Location data</span>
 </div>
 
-<form action="https://formsubmit.co/email-here.nexovar.ai@gmail.com" method="POST" class="wrap">
+<form action="https://formsubmit.co/here.nexovar.ai@gmail.com" method="POST" enctype="multipart/form-data" class="wrap" id="contributorForm">
   <input type="hidden" name="_subject" value="New contributor signup — Nexovar.ai">
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_captcha" value="false">
   <input type="text" name="_honey" style="display:none">
+  <div id="formError" style="display:none; color:#ff8585; font-size:13.5px; margin-bottom:18px;"></div>
 
   <div class="field-row">
     <div class="field">
@@ -198,14 +199,46 @@
   </div>
 
   <div class="submit-row">
-    <button type="submit">Submit and join →</button>
+    <button type="submit" id="submitBtn">Submit and join →</button>
     <span class="submit-note">We'll reach out by email when a matching project opens.</span>
   </div>
 </form>
 
 <footer>
-  <p>© 2026 Nexovar.ai · <a href="mailto:email-here.nexovar.ai@gmail.com">email-here.nexovar.ai@gmail.com</a> · <a href="tel:+917985518104">+91 79855 18104</a> · <a href="contact.html">Contact</a></p>
+  <p>© 2026 Nexovar.ai · <a href="mailto:here.nexovar.ai@gmail.com">here.nexovar.ai@gmail.com</a> · <a href="tel:+917985518104">+91 79855 18104</a> · <a href="contact.html">Contact</a></p>
 </footer>
+
+<script>
+  // Submit via fetch so the redirect always lands on THIS site's thank-you page,
+  // regardless of where the site is deployed (avoids FormSubmit's absolute-URL _next requirement).
+  const contributorForm = document.getElementById('contributorForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formError = document.getElementById('formError');
+
+  contributorForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    formError.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    const formData = new FormData(contributorForm);
+
+    fetch(contributorForm.action, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors' // FormSubmit doesn't return CORS headers on this endpoint; request still delivers.
+    })
+    .then(function(){
+      window.location.href = 'thank-you.html';
+    })
+    .catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit and join →';
+      formError.textContent = 'Something went wrong sending your details. Please try again, or email us directly at here.nexovar.ai@gmail.com.';
+      formError.style.display = 'block';
+    });
+  });
+</script>
 
 </body>
 </html>
