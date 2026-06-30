@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexovar.ai — Intelligence, Engineered</title>
+<meta name="description" content="Nexovar.ai builds applied AI systems that ship into production — agents, copilots and pipelines engineered for real workloads.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0b0e;
+    --bg-soft: #101218;
+    --line: rgba(245,244,240,0.10);
+    --ink: #f5f4f0;
+    --ink-dim: #9396a1;
+    --violet: #7c5cff;
+    --cyan: #46e0c8;
+    --amber: #ffb454;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{ background: var(--violet); color:#fff; }
+  h1,h2,h3,.display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.02em; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  /* nav */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+    backdrop-filter: blur(10px);
+    background: linear-gradient(to bottom, rgba(10,11,14,0.85), transparent);
+  }
+  .logo{ display:flex; align-items:center; gap:10px; font-weight:600; font-size:18px; }
+  .logo-mark{ display:block; flex-shrink:0; } .logo{ display:flex; align-items:center; gap:8px; } .accent{ background:linear-gradient(90deg, var(--violet), var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .navlinks{ display:flex; gap:36px; font-size:14px; color:var(--ink-dim); }
+  .navlinks a:hover{ color:var(--ink); }
+  .navcta{
+    border:1px solid var(--line); padding:9px 18px; border-radius:100px;
+    font-size:13px; transition:all .25s ease;
+  }
+  .navcta:hover{ border-color:var(--cyan); color:var(--cyan); }
+  @media (max-width:860px){ .navlinks{ display:none; } }
+
+  /* hero */
+  .hero{
+    position:relative; min-height:100svh; display:flex; flex-direction:column;
+    justify-content:center; padding-top:90px;
+  }
+  #scene{ position:absolute; inset:0; z-index:0; opacity:0; transition:opacity 1.4s ease; }
+  #scene.ready{ opacity:1; }
+  .hero-grid{
+    position:absolute; inset:0; z-index:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+  }
+  .hero-content{ position:relative; z-index:2; text-align:center; pointer-events:none; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.08em;
+    color:var(--cyan); border:1px solid rgba(70,224,200,0.3); background:rgba(70,224,200,0.06);
+    padding:6px 14px; border-radius:100px; margin-bottom:28px;
+  }
+  .hero h1{
+    font-size: clamp(40px, 7vw, 92px);
+    line-height:0.98; font-weight:600;
+  }
+  .hero h1 em{ font-style:normal; color:var(--violet); }
+  .hero p.lead{
+    max-width:620px; margin:26px auto 0; font-size:18px; color:var(--ink-dim); line-height:1.6;
+  }
+  .hero-ctas{ display:flex; gap:14px; justify-content:center; margin-top:38px; pointer-events:all; }
+  .btn{
+    padding:14px 28px; border-radius:100px; font-size:14px; font-weight:500;
+    transition:all .25s ease; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{ background:var(--ink); color:var(--bg); }
+  .btn-primary:hover{ background:var(--cyan); transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+  .scroll-cue{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    z-index:2;
+  }
+  .scroll-cue .line{ width:1px; height:36px; background:linear-gradient(var(--cyan), transparent); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:.3 } 50%{ opacity:1 } }
+
+  /* marquee */
+  .marquee{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:18px 0; overflow:hidden; white-space:nowrap; background:var(--bg-soft);
+  }
+  .marquee-track{ display:inline-block; animation: scroll 28s linear infinite; }
+  .marquee span{
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--ink-dim);
+    margin:0 28px; letter-spacing:0.03em;
+  }
+  @keyframes scroll{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
+
+  section{ padding:140px 0; position:relative; }
+  .section-head{ max-width:640px; margin-bottom:72px; }
+  .section-tag{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--violet);
+    letter-spacing:0.08em; margin-bottom:18px; display:block;
+  }
+  .section-head h2{ font-size:clamp(28px,4vw,46px); font-weight:600; line-height:1.1; }
+  .section-head p{ color:var(--ink-dim); font-size:17px; margin-top:18px; line-height:1.6; }
+
+  /* capability grid */
+  .cap-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .cap-card{ background:var(--bg); padding:40px 34px; transition:background .3s ease; }
+  .cap-card:hover{ background:var(--bg-soft); }
+  .cap-num{ font-family:'JetBrains Mono', monospace; color:var(--ink-dim); font-size:12px; }
+  .cap-card h3{ font-size:21px; margin:18px 0 12px; font-weight:600; }
+  .cap-card p{ color:var(--ink-dim); font-size:14.5px; line-height:1.65; }
+  @media (max-width:860px){ .cap-grid{ grid-template-columns:1fr; } }
+
+  /* process */
+  .process{ background:var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .process-list{ display:flex; flex-direction:column; }
+  .pstep{
+    display:grid; grid-template-columns:90px 1fr; gap:32px; padding:34px 0;
+    border-top:1px solid var(--line); align-items:start;
+  }
+  .pstep:last-child{ border-bottom:1px solid var(--line); }
+  .pstep .pnum{ font-family:'JetBrains Mono', monospace; color:var(--violet); font-size:14px; padding-top:4px; }
+  .pstep h3{ font-size:20px; margin-bottom:8px; font-weight:600; }
+  .pstep p{ color:var(--ink-dim); font-size:15px; max-width:520px; line-height:1.6; }
+  @media (max-width:640px){ .pstep{ grid-template-columns:1fr; gap:10px; } }
+
+  /* stats */
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .stat{ background:var(--bg); padding:38px 28px; text-align:left; }
+  .stat .num{ font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700; color:var(--cyan); }
+  .stat .lbl{ color:var(--ink-dim); font-size:13px; margin-top:8px; }
+  @media (max-width:860px){ .stats{ grid-template-columns:repeat(2,1fr); } }
+
+  /* cta */
+  .cta-section{ text-align:center; }
+  .cta-section h2{ font-size:clamp(30px,5vw,58px); font-weight:600; max-width:760px; margin:0 auto; line-height:1.1; }
+  .cta-section p{ color:var(--ink-dim); margin:22px auto 36px; max-width:480px; }
+
+  footer{ border-top:1px solid var(--line); padding:60px 0 40px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:40px; }
+  .foot-brand p{ color:var(--ink-dim); font-size:14px; max-width:280px; margin-top:14px; line-height:1.6; }
+  .foot-cols{ display:flex; gap:64px; }
+  .foot-col h4{ font-size:13px; color:var(--ink-dim); margin-bottom:14px; font-weight:500; }
+  .foot-col a{ display:block; font-size:14px; color:var(--ink); opacity:0.8; margin-bottom:10px; }
+  .foot-col a:hover{ opacity:1; color:var(--cyan); }
+  .foot-bottom{ margin-top:60px; padding-top:24px; border-top:1px solid var(--line); display:flex; justify-content:space-between; font-size:12px; color:var(--ink-dim); flex-wrap:wrap; gap:12px; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><svg class="logo-mark" width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="lgA" x1="0" y1="0" x2="40" y2="40"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#46e0c8"/></linearGradient></defs>
+        <line x1="10" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <line x1="30" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <line x1="10" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <line x1="30" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <circle cx="20" cy="20" r="5" fill="#8b6bff"/>
+        <circle cx="10" cy="10" r="3.5" fill="#7c5cff"/>
+        <circle cx="30" cy="10" r="3.5" fill="#46e0c8"/>
+        <circle cx="10" cy="30" r="3.5" fill="#46e0c8"/>
+        <circle cx="30" cy="30" r="3.5" fill="#7c5cff"/>
+      </svg>Nexovar<span class="accent">.ai</span></div>
+  <div class="navlinks">
+    <a href="#capabilities">Capabilities</a>
+    <a href="#process">Process</a>
+    <a href="careers.html">Careers</a>
+    <a href="contributor.html">Contribute</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="contact.html" class="navcta">Talk to us</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div id="scene"></div>
+  <div class="hero-content wrap">
+    <span class="eyebrow">● Human Data Collection for AI Agents</span>
+    <h1>Real Data.<br><em>Real Agents.</em></h1>
+    <p class="lead">Powering AI with Trusted Human Intelligence — delivering secure, scalable, and high-quality AI data services for businesses building the future of artificial intelligence.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Start a project →</a>
+      <a href="about.html" class="btn btn-ghost">About us</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>AGENTIC WORKFLOWS</span><span>·</span><span>LLM INFRASTRUCTURE</span><span>·</span><span>COMPUTER VISION</span><span>·</span><span>RAG PIPELINES</span><span>·</span><span>MODEL FINE-TUNING</span><span>·</span><span>MLOPS</span><span>·</span>
+    <span>AGENTIC WORKFLOWS</span><span>·</span><span>LLM INFRASTRUCTURE</span><span>·</span><span>COMPUTER VISION</span><span>·</span><span>RAG PIPELINES</span><span>·</span><span>MODEL FINE-TUNING</span><span>·</span><span>MLOPS</span><span>·</span>
+  </div>
+</div>
+
+<section id="capabilities">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">// CAPABILITIES</span>
+      <h2>One studio, the full stack of applied AI.</h2>
+      <p>From the first prototype to the system running in your production environment — we build, evaluate and operate it.</p>
+    </div>
+    <div class="cap-grid reveal">
+      <div class="cap-card"><span class="cap-num">01</span><h3>Agent Systems</h3><p>Autonomous and human-in-the-loop agents that plan, call tools, and complete multi-step work reliably.</p></div>
+      <div class="cap-card"><span class="cap-num">02</span><h3>Data Collection</h3><p>Audio, video, text and image data sourced and labeled at scale, by a vetted network with domain expertise.</p></div>
+      <div class="cap-card"><span class="cap-num">03</span><h3>RAG & Knowledge</h3><p>Retrieval systems grounded in your own data, with citations and guardrails your team can trust.</p></div>
+      <div class="cap-card"><span class="cap-num">04</span><h3>Fine-Tuning</h3><p>Domain-adapted models trained on your workflows, evaluated against the metrics that matter to you.</p></div>
+      <div class="cap-card"><span class="cap-num">05</span><h3>Data Annotation & QA</h3><p>Multi-pass labeling and quality review pipelines that keep training data accurate at scale.</p></div>
+      <div class="cap-card"><span class="cap-num">06</span><h3>MLOps & Scale</h3><p>Monitoring, retraining loops and infrastructure that keep your models accurate after launch day.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">// HOW WE WORK</span>
+      <h2>A short path from idea to production.</h2>
+    </div>
+    <div class="process-list reveal">
+      <div class="pstep"><span class="pnum">01</span><div><h3>Scope the problem</h3><p>We sit with your team to define the workflow worth automating and the metric that proves it worked.</p></div></div>
+      <div class="pstep"><span class="pnum">02</span><div><h3>Prototype fast</h3><p>A working version in your environment within two weeks, built on real data, not a synthetic demo.</p></div></div>
+      <div class="pstep"><span class="pnum">03</span><div><h3>Evaluate honestly</h3><p>We measure accuracy, latency and cost against your baseline before anyone calls it done.</p></div></div>
+      <div class="pstep"><span class="pnum">04</span><div><h3>Ship and operate</h3><p>We deploy into your stack and stay on to monitor, retrain and improve the system over time.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><div class="num">40+</div><div class="lbl">Systems shipped to production</div></div>
+      <div class="stat"><div class="num">12</div><div class="lbl">Industries served</div></div>
+      <div class="stat"><div class="num">99.95%</div><div class="lbl">Average uptime maintained</div></div>
+      <div class="stat"><div class="num">6wk</div><div class="lbl">Median time to first deploy</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="cta-section">
+  <div class="wrap reveal">
+    <span class="section-tag">// LET'S BUILD</span>
+    <h2>Tell us what you're trying to automate.</h2>
+    <p>Book a 30-minute call with our team. We'll tell you honestly whether AI is the right tool for it.</p>
+    <div class="hero-ctas" style="justify-content:center;">
+      <a href="contact.html" class="btn btn-primary">Go to contact page →</a>
+      <a href="tel:+917985518104" class="btn btn-ghost">+91 79855 18104</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo"><svg class="logo-mark" width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="lgA" x1="0" y1="0" x2="40" y2="40"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#46e0c8"/></linearGradient></defs>
+        <line x1="10" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <line x1="30" y1="10" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <line x1="10" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <line x1="30" y1="30" x2="20" y2="20" stroke="url(#lgA)" stroke-width="2"/>
+        <circle cx="20" cy="20" r="5" fill="#8b6bff"/>
+        <circle cx="10" cy="10" r="3.5" fill="#7c5cff"/>
+        <circle cx="30" cy="10" r="3.5" fill="#46e0c8"/>
+        <circle cx="10" cy="30" r="3.5" fill="#46e0c8"/>
+        <circle cx="30" cy="30" r="3.5" fill="#7c5cff"/>
+      </svg>Nexovar<span class="accent">.ai</span></div>
+        <p>An applied AI systems studio — agents, infrastructure and pipelines built for production, not demos.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col"><h4>STUDIO</h4><a href="#capabilities">Capabilities</a><a href="#process">Process</a><a href="careers.html">Careers</a></div>
+        <div class="foot-col"><h4>COMPANY</h4><a href="about.html">About</a><a href="contributor.html">Contribute</a><a href="contact.html">Contact</a></div>
+        <div class="foot-col"><h4>CONNECT</h4><a href="mailto:email-here.nexovar.ai@gmail.com">Email</a><a href="tel:+917985518104">+91 79855 18104</a><a href="#">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Nexovar.ai. All rights reserved.</span>
+      <span>Built with intent.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.15 });
+  revealEls.forEach(el=>io.observe(el));
+
+  // 3D hero scene: morphing data core + reactive neural-net field — premium, high-energy
+  (function(){
+    const container = document.getElementById('scene');
+    if(!window.THREE){ return; }
+    try{
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0a0b0e, 0.045);
+
+    const camera = new THREE.PerspectiveCamera(42, window.innerWidth/window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0.2, 9.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0x4a4a6a, 0.55));
+    const keyLight = new THREE.PointLight(0x9b7dff, 14, 22, 2);
+    keyLight.position.set(4, 3, 5);
+    scene.add(keyLight);
+    const rimLight = new THREE.PointLight(0x46e0c8, 11, 22, 2);
+    rimLight.position.set(-4, -2, -3);
+    scene.add(rimLight);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.22);
+    fillLight.position.set(0, 5, 3);
+    scene.add(fillLight);
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    // morphing core — organic, breathing facet surface (CPU vertex displacement, no shaders needed)
+    const coreGeo = new THREE.IcosahedronGeometry(1.85, 3);
+    const basePos = coreGeo.attributes.position.array.slice();
+    const coreMat = new THREE.MeshStandardMaterial({
+      color: 0x171a26, metalness: 0.6, roughness: 0.25,
+      emissive: 0x3a2b80, emissiveIntensity: 0.4,
+      flatShading: true
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    group.add(core);
+
+    const edgeMat = new THREE.MeshBasicMaterial({ color: 0x8be8d8, wireframe:true, transparent:true, opacity:0.4 });
+    const edgeLines = new THREE.Mesh(coreGeo, edgeMat);
+    edgeLines.scale.setScalar(1.003);
+    group.add(edgeLines);
+
+    const glowGeo = new THREE.IcosahedronGeometry(1.05, 1);
+    const glowMat = new THREE.MeshBasicMaterial({ color: 0x7c5cff, transparent:true, opacity:0.55 });
+    const glow = new THREE.Mesh(glowGeo, glowMat);
+    group.add(glow);
+
+    function noise(x,y,z,t){
+      return Math.sin(x*1.8 + t) * Math.cos(y*1.6 - t*0.9) * Math.sin(z*1.4 + t*0.7);
+    }
+
+    // accent rings — orbit the core, react to pointer speed
+    const ringGeo = new THREE.TorusGeometry(3.1, 0.012, 16, 128);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x46e0c8, transparent:true, opacity:0.55 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI/2.4;
+    group.add(ring);
+
+    const ring2Geo = new THREE.TorusGeometry(3.55, 0.008, 16, 128);
+    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x7c5cff, transparent:true, opacity:0.3 });
+    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+    ring2.rotation.x = Math.PI/1.7;
+    ring2.rotation.y = Math.PI/5;
+    group.add(ring2);
+
+    // neural-net field: nodes + connecting lines between near neighbors — the "crazy" signature element
+    const nodeCount = 70;
+    const nodePos = [];
+    for(let i=0;i<nodeCount;i++){
+      const radius = 3.0 + Math.random()*2.0;
+      const theta = Math.random()*Math.PI*2;
+      const phi = Math.acos((Math.random()*2)-1);
+      nodePos.push(new THREE.Vector3(
+        radius*Math.sin(phi)*Math.cos(theta),
+        radius*Math.sin(phi)*Math.sin(theta)*0.65,
+        radius*Math.cos(phi)
+      ));
+    }
+    const ptPositions = new Float32Array(nodeCount*3);
+    nodePos.forEach((v,i)=>{ ptPositions[i*3]=v.x; ptPositions[i*3+1]=v.y; ptPositions[i*3+2]=v.z; });
+    const pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(ptPositions,3));
+    const pointsMat = new THREE.PointsMaterial({ color: 0xe8e6ff, size:0.05, transparent:true, opacity:0.85, sizeAttenuation:true });
+    const points = new THREE.Points(pointsGeo, pointsMat);
+    group.add(points);
+
+    // connect each node to its 2 nearest neighbors — sparse, legible "data graph" look
+    const linePos = [];
+    for(let i=0;i<nodeCount;i++){
+      const dists = [];
+      for(let j=0;j<nodeCount;j++){
+        if(i===j) continue;
+        dists.push([nodePos[i].distanceTo(nodePos[j]), j]);
+      }
+      dists.sort((a,b)=>a[0]-b[0]);
+      for(let k=0;k<2;k++){
+        const j = dists[k][1];
+        linePos.push(nodePos[i].x, nodePos[i].y, nodePos[i].z, nodePos[j].x, nodePos[j].y, nodePos[j].z);
+      }
+    }
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePos), 3));
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x46e0c8, transparent:true, opacity:0.18 });
+    const netLines = new THREE.LineSegments(lineGeo, lineMat);
+    group.add(netLines);
+
+    let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0, prevTargetX = 0;
+    let pMouseX = 0, pMouseY = 0;
+    let pulse = 0;
+    window.addEventListener('mousemove', (e)=>{
+      targetX = (e.clientX / window.innerWidth - 0.5);
+      targetY = (e.clientY / window.innerHeight - 0.5);
+    });
+    window.addEventListener('mousedown', ()=>{ pulse = 1; });
+
+    function onResize(){
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize', onResize);
+
+    let scrollY = 0;
+    window.addEventListener('scroll', ()=>{ scrollY = window.scrollY; });
+
+    const posAttr = coreGeo.attributes.position;
+    const clock = new THREE.Clock();
+
+    function animate(){
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      const speed = Math.abs(targetX - prevTargetX) + Math.abs(targetY - mouseY);
+      prevTargetX = targetX;
+      pulse *= 0.94;
+
+      if(!prefersReduced){
+        // organic surface morph — amplitude rises with cursor speed and click pulse
+        const amp = 0.06 + speed*1.4 + pulse*0.35;
+        for(let i=0;i<posAttr.count;i++){
+          const ix = i*3;
+          const bx = basePos[ix], by = basePos[ix+1], bz = basePos[ix+2];
+          const len = Math.sqrt(bx*bx+by*by+bz*bz) || 1;
+          const nx = bx/len, ny = by/len, nz = bz/len;
+          const n = noise(nx*2, ny*2, nz*2, t*0.6);
+          const offset = 1 + n*amp;
+          posAttr.array[ix]   = bx*offset;
+          posAttr.array[ix+1] = by*offset;
+          posAttr.array[ix+2] = bz*offset;
+        }
+        posAttr.needsUpdate = true;
+        coreGeo.computeVertexNormals();
+
+        coreMat.emissiveIntensity = 0.4 + pulse*0.6 + Math.sin(t*1.4)*0.08;
+        core.rotation.y = t*0.12;
+        core.rotation.x = Math.sin(t*0.15)*0.1;
+        edgeLines.rotation.copy(core.rotation);
+        glow.rotation.y = -t*0.09;
+        glow.scale.setScalar(1 + pulse*0.4 + Math.sin(t*1.4)*0.04);
+        ring.rotation.z = t*0.08;
+        ring2.rotation.z = -t*0.05;
+        netLines.rotation.y = t*0.04;
+        keyLight.position.x = Math.sin(t*0.3)*5;
+        keyLight.position.z = Math.cos(t*0.3)*5 + 2;
+      }
+
+      // elastic cursor follow — overshoots slightly before settling, reads as "alive"
+      mouseX += (targetX - mouseX)*0.07;
+      mouseY += (targetY - mouseY)*0.07;
+      pMouseX += (targetX - pMouseX)*0.1;
+      pMouseY += (targetY - pMouseY)*0.1;
+
+      points.rotation.y = t*0.06 + pMouseX*1.6;
+      points.rotation.x = -pMouseY*1.1;
+      points.position.x = pMouseX*0.8;
+      points.position.y = -pMouseY*0.55;
+      netLines.rotation.x = points.rotation.x;
+      netLines.position.copy(points.position);
+
+      group.rotation.y = mouseX*0.55 + Math.sin(t*0.08)*0.04;
+      group.rotation.x = -mouseY*0.3;
+      group.position.y = -scrollY*0.0014 + Math.sin(t*0.4)*0.03;
+      group.position.x = mouseX*0.35;
+      group.scale.setScalar(1 + pulse*0.06);
+
+      const fade = Math.max(0, 1 - scrollY/700);
+      group.visible = fade > 0.02;
+      renderer.render(scene, camera);
+    }
+    animate();
+    requestAnimationFrame(()=> container.classList.add('ready'));
+    }catch(err){
+      console.error('3D scene failed to initialize:', err);
+      container.style.display = 'none';
+    }
+  })();
+</script>
+</body>
+</html>
