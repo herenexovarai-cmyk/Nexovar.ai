@@ -73,14 +73,14 @@
     padding:6px 14px; border-radius:100px; margin-bottom:28px;
   }
   .hero h1{
-    font-size: clamp(40px, 7vw, 92px);
+    font-size: clamp(32px, 7vw, 92px);
     line-height:0.98; font-weight:600;
   }
   .hero h1 em{ font-style:normal; color:var(--violet); }
   .hero p.lead{
-    max-width:620px; margin:26px auto 0; font-size:18px; color:var(--ink-dim); line-height:1.6;
+    max-width:620px; margin:26px auto 0; font-size:clamp(15px,2.5vw,18px); color:var(--ink-dim); line-height:1.6;
   }
-  .hero-ctas{ display:flex; gap:14px; justify-content:center; margin-top:38px; pointer-events:all; }
+  .hero-ctas{ display:flex; gap:14px; justify-content:center; margin-top:38px; pointer-events:all; flex-wrap:wrap; }
   .btn{
     padding:14px 28px; border-radius:100px; font-size:14px; font-weight:500;
     transition:all .25s ease; display:inline-flex; align-items:center; gap:8px;
@@ -101,7 +101,9 @@
   /* marquee */
   .marquee{
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    padding:18px 0; overflow:hidden; white-space:nowrap; background:var(--bg-soft);
+    padding:18px 0; overflow:hidden; white-space:nowrap;
+    background: rgba(16,18,24,0.55);
+    backdrop-filter: blur(12px);
   }
   .marquee-track{ display:inline-block; animation: scroll 28s linear infinite; }
   .marquee span{
@@ -110,26 +112,26 @@
   }
   @keyframes scroll{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
 
-  section{ padding:140px 0; position:relative; }
+  section{ padding:100px 0; position:relative; }
   .section-head{ max-width:640px; margin-bottom:72px; }
   .section-tag{
     font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--violet);
     letter-spacing:0.08em; margin-bottom:18px; display:block;
   }
-  .section-head h2{ font-size:clamp(28px,4vw,46px); font-weight:600; line-height:1.1; }
+  .section-head h2{ font-size:clamp(24px,4vw,46px); font-weight:600; line-height:1.1; }
   .section-head p{ color:var(--ink-dim); font-size:17px; margin-top:18px; line-height:1.6; }
 
-  /* capability grid */
-  .cap-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
-  .cap-card{ background:var(--bg); padding:40px 34px; transition:background .3s ease; }
-  .cap-card:hover{ background:var(--bg-soft); }
+  /* capability grid — translucent so 3D shows through */
+  .cap-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(245,244,240,0.07); border:1px solid var(--line); }
+  .cap-card{ background:rgba(10,11,14,0.55); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); padding:40px 34px; transition:background .3s ease; }
+  .cap-card:hover{ background:rgba(16,18,24,0.72); }
   .cap-num{ font-family:'JetBrains Mono', monospace; color:var(--ink-dim); font-size:12px; }
   .cap-card h3{ font-size:21px; margin:18px 0 12px; font-weight:600; }
   .cap-card p{ color:var(--ink-dim); font-size:14.5px; line-height:1.65; }
   @media (max-width:860px){ .cap-grid{ grid-template-columns:1fr; } }
 
-  /* process */
-  .process{ background:var(--bg-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  /* process — translucent */
+  .process{ background:rgba(16,18,24,0.5); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .process-list{ display:flex; flex-direction:column; }
   .pstep{
     display:grid; grid-template-columns:90px 1fr; gap:32px; padding:34px 0;
@@ -141,22 +143,22 @@
   .pstep p{ color:var(--ink-dim); font-size:15px; max-width:520px; line-height:1.6; }
   @media (max-width:640px){ .pstep{ grid-template-columns:1fr; gap:10px; } }
 
-  /* stats */
-  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
-  .stat{ background:var(--bg); padding:38px 28px; text-align:left; }
+  /* stats — translucent */
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(245,244,240,0.07); border:1px solid var(--line); }
+  .stat{ background:rgba(10,11,14,0.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); padding:38px 28px; text-align:left; }
   .stat .num{ font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700; color:var(--cyan); }
   .stat .lbl{ color:var(--ink-dim); font-size:13px; margin-top:8px; }
   @media (max-width:860px){ .stats{ grid-template-columns:repeat(2,1fr); } }
 
   /* cta */
   .cta-section{ text-align:center; }
-  .cta-section h2{ font-size:clamp(30px,5vw,58px); font-weight:600; max-width:760px; margin:0 auto; line-height:1.1; }
+  .cta-section h2{ font-size:clamp(24px,5vw,58px); font-weight:600; max-width:760px; margin:0 auto; line-height:1.1; }
   .cta-section p{ color:var(--ink-dim); margin:22px auto 36px; max-width:480px; }
 
-  footer{ border-top:1px solid var(--line); padding:60px 0 40px; }
+  footer{ border-top:1px solid var(--line); padding:60px 0 40px; background:rgba(10,11,14,0.7); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); }
   .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:40px; }
   .foot-brand p{ color:var(--ink-dim); font-size:14px; max-width:280px; margin-top:14px; line-height:1.6; }
-  .foot-cols{ display:flex; gap:64px; }
+  .foot-cols{ display:flex; gap:64px; flex-wrap:wrap; }
   .foot-col h4{ font-size:13px; color:var(--ink-dim); margin-bottom:14px; font-weight:500; }
   .foot-col a{ display:block; font-size:14px; color:var(--ink); opacity:0.8; margin-bottom:10px; }
   .foot-col a:hover{ opacity:1; color:var(--cyan); }
@@ -164,6 +166,19 @@
 
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
   .reveal.in{ opacity:1; transform:none; }
+
+  /* nav — translucent glass */
+  nav{ background:rgba(10,11,14,0.65) !important; backdrop-filter:blur(20px) !important; -webkit-backdrop-filter:blur(20px) !important; }
+
+  /* mobile */
+  @media (max-width:480px){
+    nav{ padding:16px 20px; }
+    .hero p.lead{ font-size:14px; padding:0 8px; }
+    .btn{ padding:12px 20px; font-size:13px; }
+    .wrap{ padding:0 18px; }
+    .foot-cols{ gap:32px; }
+    section{ padding:72px 0; }
+  }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; transition:none !important; }
@@ -314,324 +329,329 @@
   }, { threshold:0.15 });
   revealEls.forEach(el=>io.observe(el));
 
-  // 3D hero scene: realistic metallic condenser microphone + orbiting data-network field
+
+
+  // ─── NEXOVAR.AI — Premium Global Data Network Globe ───────────────────────
+  // A slowly rotating Earth with glowing data arcs shooting between world cities,
+  // animated particles riding each arc, atmospheric glow, and cursor drag to spin.
+  // Scrolls deeper/closer as the user moves down the page.
   (function(){
     const container = document.getElementById('scene');
-    if(!window.THREE){ return; }
+    if(!window.THREE) return;
     try{
+    const isMobile = window.innerWidth < 768;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x0a0b0e, 0.045);
+    // ── Renderer + Camera ──────────────────────────────────────────────────
+    const scene  = new THREE.Scene();
+    scene.fog    = new THREE.FogExp2(0x06070d, 0.022);
 
-    const camera = new THREE.PerspectiveCamera(38, window.innerWidth/window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0.1, 10);
+    const camera = new THREE.PerspectiveCamera(38, window.innerWidth/window.innerHeight, 0.1, 200);
+    camera.position.set(0, 0.8, 7.5);
 
-    const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const renderer = new THREE.WebGLRenderer({ antialias:!isMobile, alpha:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile?1.5:2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
 
-    // studio-style lighting — multiple sources to fake reflections on metal (no env map needed)
-    scene.add(new THREE.AmbientLight(0x4a4a6a, 0.5));
-    const keyLight = new THREE.PointLight(0x9b7dff, 16, 24, 2);
-    keyLight.position.set(4, 4, 5);
-    scene.add(keyLight);
-    const rimLight = new THREE.PointLight(0x46e0c8, 13, 24, 2);
-    rimLight.position.set(-4, -2, -3);
-    scene.add(rimLight);
-    const topSpec = new THREE.PointLight(0xffffff, 8, 14, 2);
-    topSpec.position.set(0.5, 5, 3);
-    scene.add(topSpec);
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
-    fillLight.position.set(-2, 2, 4);
-    scene.add(fillLight);
+    // ── Lighting ──────────────────────────────────────────────────────────
+    scene.add(new THREE.AmbientLight(0x1a1a3a, 1.2));
+    const sun = new THREE.DirectionalLight(0x9b8fff, 2.2);
+    sun.position.set(5, 3, 5); scene.add(sun);
+    const rim = new THREE.PointLight(0x46e0c8, 6, 30, 2);
+    rim.position.set(-6, -2, -4); scene.add(rim);
+    const fill = new THREE.PointLight(0x7c5cff, 4, 20, 2);
+    fill.position.set(3, 5, 2); scene.add(fill);
 
-    const group = new THREE.Group();
-    scene.add(group);
+    // ── Procedural Earth Texture ──────────────────────────────────────────
+    function buildEarthTex(){
+      const W=1024, H=512;
+      const c=document.createElement('canvas'); c.width=W; c.height=H;
+      const ctx=c.getContext('2d');
 
-    // procedural grille texture — perforated metal mesh pattern, generated at runtime (no external assets)
-    function makeGrilleTexture(){
-      const size = 256;
-      const c = document.createElement('canvas');
-      c.width = size; c.height = size;
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = '#9a9ca6';
-      ctx.fillRect(0,0,size,size);
-      ctx.fillStyle = '#1c1d24';
-      const step = 11;
-      for(let y=0;y<size;y+=step){
-        const rowOffset = (Math.round(y/step)%2)*step/2;
-        for(let x=0;x<size;x+=step){
-          ctx.beginPath();
-          ctx.arc(x+rowOffset, y, 2.4, 0, Math.PI*2);
-          ctx.fill();
-        }
+      // Deep ocean base — dark teal-blue
+      const ocean=ctx.createLinearGradient(0,0,W,H);
+      ocean.addColorStop(0,'#050d1a'); ocean.addColorStop(1,'#071422');
+      ctx.fillStyle=ocean; ctx.fillRect(0,0,W,H);
+
+      // Simplified continent outlines (latlon → pixel, roughly)
+      function ll(lat,lon){ return [((lon+180)/360)*W, ((90-lat)/180)*H]; }
+      ctx.fillStyle='#152238';
+      // North America
+      ctx.beginPath(); let p=ll(70,-140);
+      ctx.moveTo(...p);
+      [ll(70,-70),ll(60,-65),ll(45,-53),ll(25,-80),ll(10,-85),ll(8,-77),
+       ll(32,-117),ll(49,-125),ll(60,-140),ll(70,-140)].forEach(pt=>ctx.lineTo(...pt));
+      ctx.fill();
+      // South America
+      ctx.beginPath(); p=ll(12,-72);
+      [ll(12,-72),ll(8,-62),ll(-5,-35),ll(-35,-57),ll(-55,-68),ll(-20,-70),ll(0,-78),ll(12,-72)]
+      .forEach((pt,i)=>i===0?ctx.moveTo(...pt):ctx.lineTo(...pt));
+      ctx.fill();
+      // Europe
+      ctx.beginPath(); p=ll(70,30);
+      [ll(70,30),ll(60,28),ll(50,40),ll(37,36),ll(36,5),ll(44,-8),ll(52,-8),ll(60,5),ll(70,30)]
+      .forEach((pt,i)=>i===0?ctx.moveTo(...pt):ctx.lineTo(...pt));
+      ctx.fill();
+      // Africa
+      ctx.beginPath();
+      [ll(37,10),ll(37,36),ll(12,44),ll(0,42),ll(-35,28),ll(-30,16),ll(0,-5),ll(15,-17),ll(37,10)]
+      .forEach((pt,i)=>i===0?ctx.moveTo(...pt):ctx.lineTo(...pt));
+      ctx.fill();
+      // Asia
+      ctx.beginPath();
+      [ll(70,30),ll(70,180),ll(25,122),ll(8,98),ll(25,68),ll(12,44),ll(37,36),ll(50,40),ll(60,28),ll(70,30)]
+      .forEach((pt,i)=>i===0?ctx.moveTo(...pt):ctx.lineTo(...pt));
+      ctx.fill();
+      // India
+      ctx.beginPath();
+      [ll(30,68),ll(8,77),ll(8,80),ll(25,88),ll(35,78),ll(30,68)]
+      .forEach((pt,i)=>i===0?ctx.moveTo(...pt):ctx.lineTo(...pt));
+      ctx.fill();
+      // Australia
+      ctx.beginPath();
+      [ll(-17,122),ll(-18,146),ll(-38,148),ll(-38,114),ll(-25,113),ll(-17,122)]
+      .forEach((pt,i)=>i===0?ctx.moveTo(...pt):ctx.lineTo(...pt));
+      ctx.fill();
+
+      // subtle grid lines (lat/lon)
+      ctx.strokeStyle='rgba(70,224,200,0.04)'; ctx.lineWidth=1;
+      for(let la=-80;la<=80;la+=20){
+        const [,y]=ll(la,0); ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
       }
-      const tex = new THREE.CanvasTexture(c);
-      tex.wrapS = THREE.RepeatWrapping;
-      tex.wrapT = THREE.RepeatWrapping;
-      return tex;
-    }
-    const grilleTex = makeGrilleTexture();
-    grilleTex.repeat.set(8, 3);
-
-    const mic = new THREE.Group();
-
-    // lower body / handle — smooth brushed metal
-    const bodyMat = new THREE.MeshStandardMaterial({ color: 0xaeb0ba, metalness: 0.9, roughness: 0.32 });
-    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.52, 1.5, 40), bodyMat);
-    body.position.y = -0.95;
-    mic.add(body);
-
-    // accent ring — brand color, sits at the body/basket joint
-    const accentRing = new THREE.Mesh(
-      new THREE.TorusGeometry(0.515, 0.025, 16, 48),
-      new THREE.MeshStandardMaterial({ color: 0x46e0c8, metalness: 0.5, roughness: 0.3, emissive: 0x1c8f7e, emissiveIntensity: 0.6 })
-    );
-    accentRing.rotation.x = Math.PI/2;
-    accentRing.position.y = -0.18;
-    mic.add(accentRing);
-
-    // upper basket — perforated grille texture via bump map for a real mesh look
-    const grilleMat = new THREE.MeshStandardMaterial({
-      color: 0xc4c6cf, metalness: 0.85, roughness: 0.4,
-      bumpMap: grilleTex, bumpScale: 0.035
-    });
-    const basket = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1.3, 40, 1, true), grilleMat);
-    basket.position.y = 0.62;
-    mic.add(basket);
-
-    // domed cap on top of the basket
-    const cap = new THREE.Mesh(
-      new THREE.SphereGeometry(0.5, 32, 20, 0, Math.PI*2, 0, Math.PI/2),
-      grilleMat
-    );
-    cap.position.y = 1.27;
-    mic.add(cap);
-
-    // base cap — XLR-connector hint
-    const baseCap = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.52, 0.46, 0.18, 40),
-      new THREE.MeshStandardMaterial({ color: 0x2a2b32, metalness: 0.75, roughness: 0.45 })
-    );
-    baseCap.position.y = -1.78;
-    mic.add(baseCap);
-
-    // subtle violet under-glow inside the basket — reads as the capsule's "active" indicator
-    const innerGlow = new THREE.PointLight(0x7c5cff, 3, 2.2, 2);
-    innerGlow.position.y = 0.7;
-    mic.add(innerGlow);
-
-    mic.rotation.z = -0.18;
-    mic.rotation.x = 0.05;
-    mic.position.y = -0.1;
-    group.add(mic);
-
-    // soft gradient halo glowing behind the mic — violet-to-cyan radial blend
-    function makeHaloTexture(){
-      const size = 512;
-      const c = document.createElement('canvas');
-      c.width = size; c.height = size;
-      const ctx = c.getContext('2d');
-      const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
-      grad.addColorStop(0, 'rgba(124,92,255,0.55)');
-      grad.addColorStop(0.45, 'rgba(70,224,200,0.25)');
-      grad.addColorStop(1, 'rgba(70,224,200,0)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0,0,size,size);
+      for(let lo=-180;lo<=180;lo+=30){
+        const [x]=ll(0,lo); ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+      }
       return new THREE.CanvasTexture(c);
     }
-    const haloTex = makeHaloTexture();
-    const haloSprite = new THREE.Sprite(new THREE.SpriteMaterial({
-      map: haloTex, transparent:true, opacity:0.55, depthWrite:false, blending: THREE.AdditiveBlending
+
+    // ── Globe ─────────────────────────────────────────────────────────────
+    const globeGroup = new THREE.Group();
+    scene.add(globeGroup);
+
+    const RADIUS = 2.6;
+    const earthGeo = new THREE.SphereGeometry(RADIUS, isMobile?48:80, isMobile?48:80);
+    const earthMat = new THREE.MeshStandardMaterial({
+      map: buildEarthTex(),
+      metalness:0.12, roughness:0.72,
+      emissiveMap: buildEarthTex(), emissive:new THREE.Color(0x0a2240), emissiveIntensity:0.35
+    });
+    const earth = new THREE.Mesh(earthGeo, earthMat);
+    globeGroup.add(earth);
+
+    // Atmosphere — additive glow shell
+    const atmGeo = new THREE.SphereGeometry(RADIUS*1.05, 32, 32);
+    const atmMat = new THREE.MeshBasicMaterial({
+      color:0x46e0c8, transparent:true, opacity:0.055,
+      side:THREE.BackSide, blending:THREE.AdditiveBlending, depthWrite:false
+    });
+    globeGroup.add(new THREE.Mesh(atmGeo, atmMat));
+    // second outer haze in violet
+    const atmGeo2 = new THREE.SphereGeometry(RADIUS*1.12, 32, 32);
+    const atmMat2 = new THREE.MeshBasicMaterial({
+      color:0x7c5cff, transparent:true, opacity:0.03,
+      side:THREE.BackSide, blending:THREE.AdditiveBlending, depthWrite:false
+    });
+    globeGroup.add(new THREE.Mesh(atmGeo2, atmMat2));
+
+    // ── Data City Nodes ───────────────────────────────────────────────────
+    // [lat, lon, label]
+    const CITIES = [
+      [40.7,-74,'NYC'],[51.5,-0.1,'London'],[48.8,2.3,'Paris'],
+      [55.7,37.6,'Moscow'],[19.1,72.9,'Mumbai'],[28.6,77.2,'Delhi'],
+      [1.3,103.8,'Singapore'],[35.7,139.7,'Tokyo'],[-33.9,151.2,'Sydney'],
+      [37.6,-122.4,'SanFran'],[41.9,12.5,'Rome'],[-23.5,-46.6,'SaoPaulo'],
+      [30.0,31.2,'Cairo'],[6.5,3.4,'Lagos'],[-1.3,36.8,'Nairobi'],
+      [25.2,55.3,'Dubai'],[22.5,88.3,'Kolkata'],[31.2,121.5,'Shanghai']
+    ];
+
+    function latLonToVec3(lat, lon, r){
+      const phi   = (90-lat)*Math.PI/180;
+      const theta = (lon+180)*Math.PI/180;
+      return new THREE.Vector3(
+        -r*Math.sin(phi)*Math.cos(theta),
+         r*Math.cos(phi),
+         r*Math.sin(phi)*Math.sin(theta)
+      );
+    }
+
+    const nodeMat = new THREE.MeshBasicMaterial({ color:0x46e0c8, blending:THREE.AdditiveBlending, depthWrite:false });
+    const nodeGeo = new THREE.SphereGeometry(0.045, 10, 10);
+    const nodeGlowMat = new THREE.SpriteMaterial({ color:0x46e0c8, transparent:true, opacity:0.75, blending:THREE.AdditiveBlending, depthWrite:false });
+
+    // glow dot texture
+    const dotC=document.createElement('canvas'); dotC.width=dotC.height=64;
+    const dotCtx=dotC.getContext('2d');
+    const dg=dotCtx.createRadialGradient(32,32,0,32,32,32);
+    dg.addColorStop(0,'rgba(70,224,200,1)'); dg.addColorStop(1,'rgba(70,224,200,0)');
+    dotCtx.fillStyle=dg; dotCtx.fillRect(0,0,64,64);
+    nodeGlowMat.map=new THREE.CanvasTexture(dotC);
+
+    const nodePositions = CITIES.map(([lat,lon])=>latLonToVec3(lat,lon,RADIUS));
+    nodePositions.forEach(pos=>{
+      const dot = new THREE.Mesh(nodeGeo, nodeMat);
+      dot.position.copy(pos);
+      earth.add(dot);
+      const glow = new THREE.Sprite(new THREE.SpriteMaterial({...nodeGlowMat}));
+      glow.scale.set(0.3,0.3,1);
+      glow.position.copy(pos);
+      earth.add(glow);
+    });
+
+    // ── Animated Data Arcs ────────────────────────────────────────────────
+    const ARC_PAIRS = [
+      [0,1],[1,2],[0,5],[3,8],[4,7],[5,6],[6,7],[1,10],[2,9],
+      [11,0],[12,1],[13,14],[15,4],[16,7],[17,6],[9,7],[3,2],[4,1]
+    ];
+    const NPTS = 60;
+
+    function buildArc(i1, i2){
+      const a = nodePositions[i1].clone();
+      const b = nodePositions[i2].clone();
+      const mid = a.clone().lerp(b, 0.5).normalize().multiplyScalar(RADIUS*1.55);
+      const pts = [];
+      for(let t=0;t<=1;t+=1/NPTS){
+        const q = new THREE.QuadraticBezierCurve3(a, mid, b);
+        pts.push(q.getPoint(t));
+      }
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const mat = new THREE.LineBasicMaterial({
+        color: Math.random()>0.5 ? 0x46e0c8 : 0x9b7dff,
+        transparent:true, opacity:0.18+Math.random()*0.18,
+        blending:THREE.AdditiveBlending, depthWrite:false
+      });
+      return { line: new THREE.Line(geo, mat), pts, mat };
+    }
+
+    const arcs = ARC_PAIRS.map(([i,j])=>buildArc(i,j));
+    arcs.forEach(a=>earth.add(a.line));
+
+    // Animated particles traveling along arcs
+    const particleMat = new THREE.PointsMaterial({
+      color:0xffffff, size:0.07, transparent:true, opacity:0.95,
+      blending:THREE.AdditiveBlending, depthWrite:false, sizeAttenuation:true
+    });
+    const arcParticles = arcs.map(arc=>{
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(3),3));
+      const pts = new THREE.Points(pGeo, new THREE.PointsMaterial({...particleMat, color: arc.mat.color}));
+      earth.add(pts);
+      return { pts, pGeo, progress: Math.random(), speed: 0.003+Math.random()*0.005 };
+    });
+
+    // ── Background Star Field ─────────────────────────────────────────────
+    const starCount = isMobile?600:1200;
+    const starPos = new Float32Array(starCount*3);
+    for(let i=0;i<starCount;i++){
+      const r=60+Math.random()*80, th=Math.random()*Math.PI*2, ph=Math.random()*Math.PI;
+      starPos[i*3]  =r*Math.sin(ph)*Math.cos(th);
+      starPos[i*3+1]=r*Math.cos(ph);
+      starPos[i*3+2]=r*Math.sin(ph)*Math.sin(th);
+    }
+    const starGeo=new THREE.BufferGeometry();
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos,3));
+    scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({
+      color:0xffffff, size:0.18, transparent:true, opacity:0.55,
+      blending:THREE.AdditiveBlending, depthWrite:false, sizeAttenuation:true
+    })));
+
+    // ── Big Halo Sprite behind globe ──────────────────────────────────────
+    const hC=document.createElement('canvas'); hC.width=hC.height=512;
+    const hCtx=hC.getContext('2d');
+    const hg=hCtx.createRadialGradient(256,256,0,256,256,256);
+    hg.addColorStop(0,'rgba(124,92,255,0.5)'); hg.addColorStop(0.5,'rgba(70,224,200,0.18)'); hg.addColorStop(1,'rgba(70,224,200,0)');
+    hCtx.fillStyle=hg; hCtx.fillRect(0,0,512,512);
+    const halo=new THREE.Sprite(new THREE.SpriteMaterial({
+      map:new THREE.CanvasTexture(hC), transparent:true, opacity:0.6,
+      blending:THREE.AdditiveBlending, depthWrite:false
     }));
-    haloSprite.scale.set(7.5, 7.5, 1);
-    haloSprite.position.z = -1.2;
-    group.add(haloSprite);
+    halo.scale.set(12,12,1); halo.position.z=-0.5;
+    globeGroup.add(halo);
 
-    // twinkling sparkle field behind the mic — small glowing sprites with randomized twinkle phase
-    function makeSparkleTexture(){
-      const size = 64;
-      const c = document.createElement('canvas');
-      c.width = size; c.height = size;
-      const ctx = c.getContext('2d');
-      const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
-      grad.addColorStop(0, 'rgba(255,255,255,1)');
-      grad.addColorStop(0.3, 'rgba(255,255,255,0.8)');
-      grad.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0,0,size,size);
-      return new THREE.CanvasTexture(c);
+    // ── Cursor/Touch Drag ─────────────────────────────────────────────────
+    let dragX=0,dragY=0,autoY=0,isDragging=false,lastTX=0,lastTY=0,velX=0;
+    function onMove(cx,cy){
+      if(!isDragging) return;
+      velX=(cx-lastTX)*0.008; dragX+=(cx-lastTX)*0.008;
+      dragY+=(cy-lastTY)*0.005; dragY=Math.max(-0.7,Math.min(0.7,dragY));
+      lastTX=cx; lastTY=cy;
     }
-    const sparkleTex = makeSparkleTexture();
-    const sparkleColors = [0xe8e6ff, 0x9b7dff, 0x46e0c8];
-    const sparkleGroup = new THREE.Group();
-    const sparklePhases = [];
-    const sparkleCount = 36;
-    for(let i=0;i<sparkleCount;i++){
-      const color = sparkleColors[i % sparkleColors.length];
-      const mat = new THREE.SpriteMaterial({
-        map: sparkleTex, color, transparent:true, depthWrite:false, blending: THREE.AdditiveBlending
-      });
-      const spr = new THREE.Sprite(mat);
-      const radius = 1.3 + Math.random()*2.6;
-      const theta = Math.random()*Math.PI*2;
-      const yspread = (Math.random()-0.5)*3.6;
-      spr.position.set(Math.cos(theta)*radius, yspread, Math.sin(theta)*radius - 0.8);
-      const baseScale = 0.06 + Math.random()*0.12;
-      spr.scale.setScalar(baseScale);
-      sparkleGroup.add(spr);
-      sparklePhases.push({
-        speed: 0.8 + Math.random()*1.8,
-        offset: Math.random()*Math.PI*2,
-        baseOpacity: 0.5 + Math.random()*0.5,
-        baseScale
-      });
+    window.addEventListener('mousedown', e=>{isDragging=true;lastTX=e.clientX;lastTY=e.clientY;});
+    window.addEventListener('mouseup',   ()=>{isDragging=false;});
+    window.addEventListener('mousemove', e=>onMove(e.clientX,e.clientY));
+    window.addEventListener('touchstart', e=>{isDragging=true;lastTX=e.touches[0].clientX;lastTY=e.touches[0].clientY;},{passive:true});
+    window.addEventListener('touchend',   ()=>{isDragging=false;},{passive:true});
+    window.addEventListener('touchmove',  e=>{onMove(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+
+    // ── Scroll ────────────────────────────────────────────────────────────
+    let scrollProgress=0;
+    function updateScroll(){
+      const max=document.documentElement.scrollHeight-window.innerHeight;
+      scrollProgress=max>0?Math.min(1,window.scrollY/max):0;
     }
-    group.add(sparkleGroup);
-
-    // accent rings orbiting the mic — ties back to the data/network brand motif
-    const ringGeo = new THREE.TorusGeometry(3.2, 0.01, 16, 128);
-    const ringMatO = new THREE.MeshBasicMaterial({ color: 0x46e0c8, transparent:true, opacity:0.4 });
-    const ring = new THREE.Mesh(ringGeo, ringMatO);
-    ring.rotation.x = Math.PI/2.4;
-    group.add(ring);
-
-    const ring2Geo = new THREE.TorusGeometry(3.65, 0.007, 16, 128);
-    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x7c5cff, transparent:true, opacity:0.25 });
-    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-    ring2.rotation.x = Math.PI/1.7;
-    ring2.rotation.y = Math.PI/5;
-    group.add(ring2);
-
-    // orbiting data-network field — nodes connected to nearest neighbors
-    const nodeCount = 60;
-    const nodePos = [];
-    for(let i=0;i<nodeCount;i++){
-      const radius = 3.1 + Math.random()*2.0;
-      const theta = Math.random()*Math.PI*2;
-      const phi = Math.acos((Math.random()*2)-1);
-      nodePos.push(new THREE.Vector3(
-        radius*Math.sin(phi)*Math.cos(theta),
-        radius*Math.sin(phi)*Math.sin(theta)*0.65,
-        radius*Math.cos(phi)
-      ));
-    }
-    const ptPositions = new Float32Array(nodeCount*3);
-    nodePos.forEach((v,i)=>{ ptPositions[i*3]=v.x; ptPositions[i*3+1]=v.y; ptPositions[i*3+2]=v.z; });
-    const pointsGeo = new THREE.BufferGeometry();
-    pointsGeo.setAttribute('position', new THREE.BufferAttribute(ptPositions,3));
-    const pointsMat = new THREE.PointsMaterial({ color: 0xe8e6ff, size:0.045, transparent:true, opacity:0.75, sizeAttenuation:true });
-    const points = new THREE.Points(pointsGeo, pointsMat);
-    group.add(points);
-
-    const linePos = [];
-    for(let i=0;i<nodeCount;i++){
-      const dists = [];
-      for(let j=0;j<nodeCount;j++){
-        if(i===j) continue;
-        dists.push([nodePos[i].distanceTo(nodePos[j]), j]);
-      }
-      dists.sort((a,b)=>a[0]-b[0]);
-      for(let k=0;k<2;k++){
-        const j = dists[k][1];
-        linePos.push(nodePos[i].x, nodePos[i].y, nodePos[i].z, nodePos[j].x, nodePos[j].y, nodePos[j].z);
-      }
-    }
-    const lineGeo = new THREE.BufferGeometry();
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePos), 3));
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x46e0c8, transparent:true, opacity:0.15 });
-    const netLines = new THREE.LineSegments(lineGeo, lineMat);
-    group.add(netLines);
-
-    let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-    let pMouseX = 0, pMouseY = 0;
-    let pulse = 0;
-    window.addEventListener('mousemove', (e)=>{
-      targetX = (e.clientX / window.innerWidth - 0.5);
-      targetY = (e.clientY / window.innerHeight - 0.5);
-    });
-    window.addEventListener('mousedown', ()=>{ pulse = 1; });
-
-    function onResize(){
-      camera.aspect = window.innerWidth/window.innerHeight;
+    window.addEventListener('scroll',updateScroll,{passive:true});
+    window.addEventListener('resize',()=>{
+      camera.aspect=window.innerWidth/window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    window.addEventListener('resize', onResize);
+      renderer.setSize(window.innerWidth,window.innerHeight);
+      updateScroll();
+    });
+    updateScroll();
 
-    let scrollY = 0, scrollProgress = 0;
-    function updateScrollProgress(){
-      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
-      scrollY = window.scrollY;
-      scrollProgress = scrollMax > 0 ? Math.min(1, Math.max(0, scrollY / scrollMax)) : 0;
-    }
-    window.addEventListener('scroll', updateScrollProgress);
-    window.addEventListener('resize', updateScrollProgress);
-    updateScrollProgress();
-
-    const clock = new THREE.Clock();
-
+    // ── Animate ───────────────────────────────────────────────────────────
+    const clock=new THREE.Clock();
     function animate(){
       requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-      pulse *= 0.94;
+      const t=clock.getElapsedTime();
 
+      // inertia
+      if(!isDragging){ velX*=0.96; dragX+=velX; }
+
+      // auto slow drift
+      autoY = t*0.04;
+
+      // globe spin: auto + drag
+      earth.rotation.y = autoY + dragX;
+      globeGroup.rotation.x = dragY*0.6;
+
+      // scroll: globe moves up and zooms in slightly as user scrolls
+      globeGroup.position.y = 0.5 - scrollProgress*3.5;
+      globeGroup.scale.setScalar(1 + scrollProgress*0.35);
+
+      // lights orbit
       if(!prefersReduced){
-        // slow turntable rotation — like a studio product showcase
-        mic.rotation.y = t*0.18;
-        mic.position.y = -0.1 + Math.sin(t*0.5)*0.07;
-        innerGlow.intensity = 3 + pulse*4 + Math.sin(t*1.6)*0.6;
-        accentRing.material.emissiveIntensity = 0.6 + pulse*0.8;
-
-        ring.rotation.z = t*0.07;
-        ring2.rotation.z = -t*0.045;
-        netLines.rotation.y = t*0.035;
-        keyLight.position.x = Math.sin(t*0.3)*5;
-        keyLight.position.z = Math.cos(t*0.3)*5 + 2;
+        fill.position.x=Math.sin(t*0.35)*5;
+        fill.position.z=Math.cos(t*0.35)*5;
       }
 
-      mouseX += (targetX - mouseX)*0.06;
-      mouseY += (targetY - mouseY)*0.06;
-      pMouseX += (targetX - pMouseX)*0.09;
-      pMouseY += (targetY - pMouseY)*0.09;
-
-      points.rotation.y = t*0.05 + pMouseX*1.4;
-      points.rotation.x = -pMouseY*1.0;
-      points.position.x = pMouseX*0.7;
-      points.position.y = -pMouseY*0.5;
-      netLines.rotation.x = points.rotation.x;
-      netLines.position.copy(points.position);
-
-      // mic tilts toward the cursor like it's pointed at you — restrained, premium motion
-      mic.rotation.x = 0.05 - mouseY*0.25;
-      mic.rotation.z = -0.18 + mouseX*0.18;
-
-      group.rotation.y = mouseX*0.25;
-      // mic drifts downward with the page as the user scrolls — visible all the way to the bottom
-      group.position.y = 0.4 - scrollProgress*5.6 + Math.sin(t*0.4)*0.05;
-      group.position.x = mouseX*0.3 + Math.sin(scrollProgress*Math.PI)*0.4;
-      group.scale.setScalar((1 - scrollProgress*0.18) + pulse*0.04);
-
-      sparkleGroup.children.forEach((s, i)=>{
-        const phase = sparklePhases[i];
-        const tw = (Math.sin(t*phase.speed + phase.offset) + 1) / 2;
-        s.material.opacity = phase.baseOpacity * (0.35 + tw*0.65);
-        s.scale.setScalar(phase.baseScale * (0.8 + tw*0.5));
+      // animated arc particles
+      arcParticles.forEach((ap,i)=>{
+        ap.progress+=ap.speed;
+        if(ap.progress>1) ap.progress=0;
+        const idx=Math.floor(ap.progress*(NPTS-1));
+        const pt=arcs[i].pts[Math.min(idx,NPTS-1)];
+        if(pt){
+          ap.pGeo.attributes.position.setXYZ(0,pt.x,pt.y,pt.z);
+          ap.pGeo.attributes.position.needsUpdate=true;
+        }
+        ap.pts.material.opacity=0.7+Math.sin(t*3+i)*0.3;
       });
-      haloSprite.material.opacity = 0.5 + Math.sin(t*0.6)*0.08;
-      haloSprite.position.set(mic.position.x, mic.position.y, mic.position.z - 1.2);
 
-      renderer.render(scene, camera);
+      // node glow pulse
+      earth.children.forEach((c,i)=>{
+        if(c.isSprite){ c.material.opacity=0.55+Math.sin(t*2.2+i*0.8)*0.45; }
+      });
+
+      // halo breathe
+      halo.material.opacity=0.52+Math.sin(t*0.55)*0.1;
+
+      renderer.render(scene,camera);
     }
     animate();
-    requestAnimationFrame(()=> container.classList.add('ready'));
-    }catch(err){
-      console.error('3D scene failed to initialize:', err);
-      container.style.display = 'none';
-    }
+    requestAnimationFrame(()=>container.classList.add('ready'));
+    }catch(err){ console.error('3D err:',err); container.style.display='none'; }
   })();
+
 </script>
 </body>
 </html>
